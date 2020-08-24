@@ -14,12 +14,12 @@ namespace ConsoleApp1
             Console.WriteLine("Feed me some numbers!");
 
             const int numberOfNumbersToAskFor = 5;
-            string[] numbers = AskForNumbers(numberOfNumbersToAskFor);
+            int[] numbers = AskForNumbers(numberOfNumbersToAskFor);
 
             PrintNumbers(numbers);
         }
 
-        private static void PrintNumbers(string[] numbers)
+        private static void PrintNumbers(int[] numbers)
         {
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -27,12 +27,13 @@ namespace ConsoleApp1
             }
         }
 
-        private static string[] AskForNumbers(int numberOfNumbersToAskFor)
+        private static int[] AskForNumbers(int numberOfNumbersToAskFor)
         {
-            string[] numbers = new string[numberOfNumbersToAskFor];
+            int[] numbers = new int[numberOfNumbersToAskFor];
             for (int i = 0; i < numbers.Length; i++)
             {
-                numbers[i] = Console.ReadLine();
+                numbers[i] = Convert.ToInt32(Console.ReadLine());
+                // numbers[i] = int.Parse(Console.ReadLine());
             }
 
             return numbers;
