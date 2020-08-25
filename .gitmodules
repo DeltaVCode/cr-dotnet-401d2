@@ -1,0 +1,6 @@
+[submodule "Class02/DSA"]
+	path = Class02/DSA
+	url = https://github.com/dahlbyk-demo/cr-dotnet-401d2-dsa
+[submodule "Class01/DSA"]
+	path = Class01/DSA
+	url = https://github.com/dahlbyk-demo/cr-dotnet-401d2-dsa
