@@ -64,5 +64,26 @@ namespace FizzBuzz.Tests
             // Assert
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(1, "1")]
+        [InlineData(2, "2")]
+        [InlineData(3, "Fizz")]
+        [InlineData(4, "4")]
+        [InlineData(5, "Buzz")]
+        [InlineData(6, "Fizz")]
+        [InlineData(15, "FizzBuzz")]
+        [InlineData(30, "FizzBuzz")]
+        public void Convert_returns_expected_result(int number, string expected)
+        {
+            // Arrange
+            // from Theory InlineData
+
+            // Act
+            string result = FizzBuzzer.Convert(number);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
     }
 }
