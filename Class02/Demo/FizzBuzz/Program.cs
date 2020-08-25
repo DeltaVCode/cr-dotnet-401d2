@@ -6,8 +6,22 @@ namespace FizzBuzz
     {
         static void Main(string[] args)
         {
-            ArgsDemo(args);
-            StringToWhateverDemo();
+            FizzBuzzDemo();
+            //ArgsDemo(args);
+            //StringToWhateverDemo();
+        }
+
+        static void FizzBuzzDemo()
+        {
+            // Print numbers 1 through 100
+            // but print Fizz if a multiple of 3
+            //     print Buzz if a multiple of 5
+            //     print FizzBuzz if a multiple of both
+            for (int n = 1; n < 100; n++)
+            {
+                var fizzBuzzed = FizzBuzzer.Convert(n);
+                Console.WriteLine($"{n}: {fizzBuzzed}");
+            }
         }
 
         static void ArgsDemo(string[] args)
