@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DemoApp
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -31,6 +31,17 @@ namespace DemoApp
 
             byte[] bytes = File.ReadAllBytes(path);
             Array.ForEach(bytes, b => Console.WriteLine(b.ToString("X2")));
+
+            AddTimestampToFile("times.log");
+        }
+
+        public static void AddTimestampToFile(string path)
+        {
+            DateTime now = DateTime.UtcNow;
+            string timestamp = now.ToString("u");
+
+
+            File.AppendAllLines(path, new[] { timestamp });
         }
     }
 }
