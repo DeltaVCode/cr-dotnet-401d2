@@ -85,5 +85,25 @@ namespace FizzBuzz.Tests
             // Assert
             Assert.Equal(expected, result);
         }
+
+        private void TestFizzBuzzHelper(int number, string expected)
+        {
+            string result = FizzBuzzer.Convert(number);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Test_with_helper_1()
+        {
+            TestFizzBuzzHelper(1, "1");
+        }
+
+        [Fact]
+        public void Test_with_helper_3()
+        {
+            TestFizzBuzzHelper(3, "Fizz");
+        }
     }
 }
