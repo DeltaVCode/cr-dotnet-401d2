@@ -8,6 +8,8 @@ namespace Demo
         [Fact]
         public void Can_create_a_Book()
         {
+            var initialBookCount = Book.BookCount;
+
             Book book1 = new Book("C# in Depth");
             Book book2 = new Book("C# out of Depth");
 
@@ -22,6 +24,9 @@ namespace Demo
             book1.Author = new Author("Ben", "Something");
             string formattedBook = book1.FormatBookTitleAndAuthor();
             Assert.Equal("C# in Depth by Ben Something", formattedBook);
+
+
+            Assert.Equal(initialBookCount + 2, Book.BookCount);
         }
 
         [Fact]

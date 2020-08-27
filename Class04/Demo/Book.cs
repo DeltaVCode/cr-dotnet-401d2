@@ -1,9 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Demo
 {
     public class Book
     {
+        // Static Fields
+        private static int bookCount = 0;
+        private static List<Book> books = new List<Book>();
+
+        // Static Properties
+        public static int BookCount => bookCount; // "expression body" for simple property
+        //public static int BookCount { get { return bookCount; } }
+
         // Fields
         private readonly string title;
         private Author author;
@@ -12,6 +21,9 @@ namespace Demo
         public Book(string title)
         {
             this.title = title;
+
+            bookCount++;
+            books.Add(this);
         }
 
         // Properties
