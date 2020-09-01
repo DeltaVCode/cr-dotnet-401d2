@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Demo
 {
-    abstract class BirthdayParty : Party
+    public abstract class BirthdayParty : Party
     {
         public BirthdayParty(int age)
         {
@@ -18,7 +18,7 @@ namespace Demo
         }
     }
 
-    class KidBirthdayParty : BirthdayParty
+    public class KidBirthdayParty : BirthdayParty
     {
         public KidBirthdayParty(int age, string name) : base(age)
         {
@@ -37,7 +37,24 @@ namespace Demo
         }
     }
 
-    class QuinceaneraParty : BirthdayParty
+    public class KidBirthdayPoolParty : KidBirthdayParty, IPoolParty
+    {
+        public KidBirthdayPoolParty(int age, string name)
+            : base(age, name)
+        {
+        }
+
+        public decimal PoolDepth { get; set; }
+        public int PoolLength { get; set; }
+        public int PoolWidth { get; set; }
+
+        public int EmptyThePool()
+        {
+            return 90;
+        }
+    }
+
+    public class QuinceaneraParty : BirthdayParty
     {
         public QuinceaneraParty() : base(15)
         {
@@ -53,6 +70,17 @@ namespace Demo
         public override string SingHappyBirthday()
         {
             return "Feliz cumpleanos";
+        }
+    }
+
+    public class BouncyQuince : QuinceaneraParty, IHasBounceHouse
+    {
+        public int BounceHouseCapacity => 5;
+        public double PowerRequirement => 200;
+
+        public void ChangeBouncers()
+        {
+            Console.WriteLine("GTFO");
         }
     }
 

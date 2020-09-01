@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Demo
 {
-    class PoolParty : Party
+    public class PoolParty : Party, IPoolParty
     {
         private int poolLength;
 
@@ -20,14 +20,19 @@ namespace Demo
         }
 
         public int PoolWidth { get; set; }
-        public int PoolDepth { get; set; }
+        public decimal PoolDepth { get; set; }
 
-        public int PoolVolume => PoolLength * PoolWidth * PoolDepth;
+        public decimal PoolVolume => PoolLength * PoolWidth * PoolDepth + 1;
 
         // Inherited from Party, and we *have to* implement it
         public override bool HasBooze
         {
             get { return false; }
+        }
+
+        public int EmptyThePool()
+        {
+            return 360;
         }
 
         public override void Setup()
@@ -37,7 +42,7 @@ namespace Demo
         }
     }
 
-    class BoozyPoolParty : PoolParty
+    public class BoozyPoolParty : PoolParty
     {
         public override bool HasBooze => true;
 

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Demo
 {
-    abstract class Party
+    public abstract class Party
     {
         public decimal Budget { get; set; }
 
@@ -16,7 +16,14 @@ namespace Demo
 
         public virtual void Teardown()
         {
-            Console.WriteLine("No teardown required");
+            if (this is IPoolParty poolParty)
+            {
+                Console.WriteLine("Emptying the pool will take " + poolParty.EmptyThePool() + " minutes.");
+            }
+            else
+            {
+                Console.WriteLine("No teardown required");
+            }
         }
     }
 
