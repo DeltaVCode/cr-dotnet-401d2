@@ -14,6 +14,8 @@ namespace Demo
         // Not a property because this is really an implementation detail
         //public T[] Things { get; set; }
 
+        public int Count => count;
+
         public void Add(T thing)
         {
             // Ran out of room!
@@ -24,6 +26,21 @@ namespace Demo
 
             things[count] = thing;
             count++;
+        }
+
+        public bool RemoveAt(int indexToRemove)
+        {
+            if (indexToRemove < 0)
+                return false;
+
+            for (int i = indexToRemove; i < count; i++)
+            {
+                things[i] = things[i + 1];
+            }
+
+            things[count] = default;
+            count--;
+            return true;
         }
 
         public IEnumerator<T> GetEnumerator()
