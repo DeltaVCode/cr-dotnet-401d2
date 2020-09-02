@@ -7,3 +7,6 @@
 [submodule "Class05/DSA"]
 	path = Class05/DSA
 	url = https://github.com/dahlbyk-demo/cr-dotnet-401d2-dsa
+[submodule "Class08/DSA"]
+	path = Class08/DSA
+	url = https://github.com/dahlbyk-demo/cr-dotnet-401d2-dsa
