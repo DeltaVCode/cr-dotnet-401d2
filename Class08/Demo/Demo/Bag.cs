@@ -16,20 +16,14 @@ namespace Demo
 
         public void Add(T thing)
         {
-            // There's room in the bag
-            if (count < things.Length)
+            // Ran out of room!
+            if (count >= things.Length)
             {
-                things[count] = thing;
-                count++;
-                return;
+                Array.Resize(ref things, things.Length * 2);
             }
 
-            T[] newThings = new T[things.Length * 2];
-            Array.Copy(things, newThings, things.Length);
-            newThings[things.Length] = thing;
+            things[count] = thing;
             count++;
-
-            this.things = newThings;
         }
 
         public IEnumerator<T> GetEnumerator()
