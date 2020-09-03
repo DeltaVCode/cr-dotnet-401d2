@@ -39,11 +39,22 @@ namespace Demo.Tests
             };
 
             // Act
+            // LINQ method syntax
             IEnumerable<string> names = authors
                 .Where(author => author.FirstName.StartsWith("K"))
                 .Select(author => author.FirstName);
 
+            // Extension method allows this:
+            //   Enumerable.Where(authors, a => ...)
+            // to be called like this:
+            //   authors.Where(a => ...)
+
+            // Lambda expression or a delegate
+            // (Author a) => a.FirstName == "Keith"
+            // is a Func<Author, bool> = "function from Author to boolean"
+
             // SQL : SELECT FirstName From Authors WHERE FirstName LIKE 'K%'
+            // LINQ Query syntax
             IEnumerable<string> namesQuery =
                 from a in authors
                 where a.FirstName.StartsWith("K")
