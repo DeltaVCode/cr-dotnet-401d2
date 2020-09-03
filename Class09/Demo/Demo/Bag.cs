@@ -7,12 +7,38 @@ namespace Demo
     public class Bag<T> : IEnumerable<T>
     {
         // Fields
-        private T[] things = new T[2];
+        private T[] things;
 
         private int count = 0;
 
         // Not a property because this is really an implementation detail
         //public T[] Things { get; set; }
+
+        // Constructors
+        public Bag(int capacity)
+        {
+            things = new T[capacity];
+        }
+
+        public Bag() : this(10)
+        {
+        }
+
+        public Bag(IEnumerable<T> collection) : this(GuessCapacity(collection))
+        {
+            foreach (T t in collection)
+                Add(t);
+        }
+
+        private static int GuessCapacity(IEnumerable<T> collection)
+        {
+            if (collection is IReadOnlyList<T> list)
+            {
+                return list.Count;
+            }
+
+            return 10;
+        }
 
         public int Count => count;
 

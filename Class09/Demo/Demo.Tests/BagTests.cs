@@ -21,7 +21,7 @@ namespace Demo.Tests
         public void CanAddToBag()
         {
             // Arrange
-            Bag<string> bag = new Bag<string>();
+            Bag<string> bag = new Bag<string>(2);
 
             // Act
             bag.Add("Keith");
@@ -60,7 +60,7 @@ namespace Demo.Tests
         public void CanRemoveFromBag()
         {
             // Arrange
-            Bag<string> bag = new Bag<string>
+            Bag<string> bag = new Bag<string>(5)
             {
                 "A",
                 "B",
