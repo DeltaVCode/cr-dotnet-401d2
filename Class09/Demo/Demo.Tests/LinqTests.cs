@@ -1,0 +1,85 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Xunit;
+
+namespace Demo.Tests
+{
+    public class LinqTests
+    {
+        [Fact]
+        public void MapInLinqIsCalledSelect()
+        {
+            IEnumerable<Author> authors = new[]
+            {
+                new Author("Keith", "Dahlby"),
+                new Author("Craig", "Barkley"),
+            };
+
+            // Act
+            IEnumerable<string> names = authors.Select(author => $"{author.FirstName} {author.LastName}");
+
+            // SQL : SELECT FirstName + ' ' + LastName AS Name From Authors
+            IEnumerable<string> namesQuery =
+                from a in authors
+                select $"{a.FirstName} {a.LastName}";
+
+            // Assert
+            Assert.Equal(new[] { "Keith Dahlby", "Craig Barkley" }, names);
+            Assert.Equal(names, namesQuery);
+        }
+
+        [Fact]
+        public void FilterInLinqIsCalledWhere()
+        {
+            IEnumerable<Author> authors = new Bag<Author>
+            {
+                new Author("Keith", "Dahlby"),
+                new Author("Craig", "Barkley"),
+                new Author("Kylo", "Ren"),
+            };
+
+            // Act
+            IEnumerable<string> names = authors
+                .Where(author => author.FirstName.StartsWith("K"))
+                .Select(author => author.FirstName);
+
+            // SQL : SELECT FirstName From Authors WHERE FirstName LIKE 'K%'
+            IEnumerable<string> namesQuery =
+                from a in authors
+                where a.FirstName.StartsWith("K")
+                select a.FirstName;
+
+            // Assert
+            Assert.Equal(new[] { "Keith", "Kylo" }, names);
+            Assert.Equal(names, namesQuery);
+        }
+
+        [Fact]
+        public void ReduceInLinqIsCalledAggregate()
+        {
+            List<int> numbers = new List<int>
+            {
+                1,2,3,4,5,5,12,1235,5
+            };
+
+            numbers.Insert(8, 25);
+
+            // numbers.reduce((acc, next) => acc + next, 0)
+            int sum = numbers.Aggregate(0, (acc, next) => acc + next);
+
+            Assert.Equal(1297, sum);
+        }
+    }
+
+    internal class Author
+    {
+        public Author(string firstName, string lastName)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+        }
+
+        public string FirstName { get; }
+        public string LastName { get; }
+    }
+}
