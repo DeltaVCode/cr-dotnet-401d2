@@ -13,18 +13,19 @@ namespace Demo.Tests
             {
                 new Author("Keith", "Dahlby"),
                 new Author("Craig", "Barkley"),
+                new SingleNameAuthor("Prince"),
             };
 
             // Act
-            IEnumerable<string> names = authors.Select(author => $"{author.FirstName} {author.LastName}");
+            IEnumerable<string> names = authors.Select(author => author.FullName);
 
             // SQL : SELECT FirstName + ' ' + LastName AS Name From Authors
             IEnumerable<string> namesQuery =
                 from a in authors
-                select $"{a.FirstName} {a.LastName}";
+                select a.FullName;
 
             // Assert
-            Assert.Equal(new[] { "Keith Dahlby", "Craig Barkley" }, names);
+            Assert.Equal(new[] { "Keith Dahlby", "Craig Barkley", "Prince" }, names);
             Assert.Equal(names, namesQuery);
         }
 
@@ -92,5 +93,16 @@ namespace Demo.Tests
 
         public string FirstName { get; }
         public string LastName { get; }
+
+        public virtual string FullName => $"{FirstName} {LastName}";
+    }
+
+    internal class SingleNameAuthor : Author
+    {
+        public SingleNameAuthor(string singleName) : base(singleName, "")
+        {
+        }
+
+        public override string FullName => FirstName;
     }
 }
