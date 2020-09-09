@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Web.Models;
 
 namespace Web.Data
 {
@@ -8,5 +9,8 @@ namespace Web.Data
             : base(options)
         {
         }
+
+        // There should be a Students table with Student records in it
+        public DbSet<Student> Students { get; set; }
     }
 }
