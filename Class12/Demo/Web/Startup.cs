@@ -34,6 +34,11 @@ namespace Web
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+
+                endpoints.MapGet("/boom", context =>
+                {
+                    throw new InvalidOperationException("boom");
+                });
             });
         }
     }
