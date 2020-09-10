@@ -7,12 +7,12 @@ namespace Web.Services
     {
         IEnumerable<Student> GetAll();
 
-        Student GetOneById(int id);
+        Student GetOneById(long id);
 
         void Create(Student student);
 
-        void UpdateOneById(int id, Student student);
+        void UpdateOneById(long id, Student student);
 
-        void DeleteOneById(int id);
+        void DeleteOneById(long id);
     }
 }

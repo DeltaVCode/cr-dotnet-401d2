@@ -27,7 +27,7 @@ namespace Web.Controllers
 
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-        public Student Get(int id)
+        public Student Get(long id)
         {
             return studentRepository.GetOneById(id);
         }
@@ -41,14 +41,14 @@ namespace Web.Controllers
 
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Student student)
+        public void Put(long id, [FromBody] Student student)
         {
             studentRepository.UpdateOneById(id, student);
         }
 
         // DELETE api/<StudentsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(long id)
         {
             studentRepository.DeleteOneById(id);
         }
