@@ -24,9 +24,9 @@ namespace Web.Controllers
 
         // GET: api/Technologies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Technology>>> GetTechnologies()
+        public async Task<IEnumerable<Technology>> GetTechnologies()
         {
-            return await _context.Technologies.ToListAsync();
+            return await repository.GetAllAsync();
         }
 
         // GET: api/Technologies/5
