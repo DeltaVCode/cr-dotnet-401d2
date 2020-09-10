@@ -9,6 +9,8 @@ namespace Web.Services
     public interface ITechnologyRepository
     {
         Task<IEnumerable<Technology>> GetAllAsync();
+
+        Task<Technology> GetOneByIdAsync(int id);
     }
 
     public class DatabaseTechnologyRepository : ITechnologyRepository
@@ -23,6 +25,12 @@ namespace Web.Services
         public async Task<IEnumerable<Technology>> GetAllAsync()
         {
             return await _context.Technologies.ToListAsync();
+        }
+
+        public async Task<Technology> GetOneByIdAsync(int id)
+        {
+            var technology = await _context.Technologies.FindAsync(id);
+            return technology;
         }
     }
 }

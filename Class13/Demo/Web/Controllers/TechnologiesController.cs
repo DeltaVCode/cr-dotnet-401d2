@@ -33,7 +33,7 @@ namespace Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Technology>> GetTechnology(int id)
         {
-            var technology = await _context.Technologies.FindAsync(id);
+            var technology = await repository.GetOneByIdAsync(id);
 
             if (technology == null)
             {
