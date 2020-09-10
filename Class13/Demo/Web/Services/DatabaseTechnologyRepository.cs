@@ -13,6 +13,8 @@ namespace Web.Services
         Task<Technology> GetOneByIdAsync(int id);
 
         Task CreateAsync(Technology technology);
+
+        Task<Technology> DeleteAsync(int id);
     }
 
     public class DatabaseTechnologyRepository : ITechnologyRepository
@@ -39,6 +41,21 @@ namespace Web.Services
         {
             _context.Technologies.Add(technology);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Technology> DeleteAsync(int id)
+        {
+            var technology = await _context.Technologies.FindAsync(id);
+
+            if (technology == null)
+            {
+                return null;
+            }
+
+            _context.Technologies.Remove(technology);
+            await _context.SaveChangesAsync();
+
+            return technology;
         }
     }
 }

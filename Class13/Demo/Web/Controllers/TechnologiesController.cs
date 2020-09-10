@@ -90,14 +90,12 @@ namespace Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Technology>> DeleteTechnology(int id)
         {
-            var technology = await _context.Technologies.FindAsync(id);
+            var technology = await repository.DeleteAsync(id);
+
             if (technology == null)
             {
                 return NotFound();
             }
-
-            _context.Technologies.Remove(technology);
-            await _context.SaveChangesAsync();
 
             return technology;
         }
