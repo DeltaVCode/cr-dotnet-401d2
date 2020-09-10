@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Web.Data;
 using Web.Models;
 using Web.Services;
 
@@ -12,12 +11,10 @@ namespace Web.Controllers
     public class TechnologiesController : ControllerBase
     {
         private readonly ITechnologyRepository repository;
-        private readonly SchoolDbContext _context;
 
-        public TechnologiesController(ITechnologyRepository repository, SchoolDbContext context)
+        public TechnologiesController(ITechnologyRepository repository)
         {
             this.repository = repository;
-            _context = context;
         }
 
         // GET: api/Technologies
