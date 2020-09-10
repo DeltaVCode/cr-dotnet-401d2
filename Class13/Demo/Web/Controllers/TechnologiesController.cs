@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
 using Web.Services;
@@ -54,22 +52,11 @@ namespace Web.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(technology).State = EntityState.Modified;
+            bool didUpdate = await repository.UpdateAsync(technology);
 
-            try
+            if (didUpdate == false)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TechnologyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -98,11 +85,6 @@ namespace Web.Controllers
             }
 
             return technology;
-        }
-
-        private bool TechnologyExists(int id)
-        {
-            return _context.Technologies.Any(e => e.Id == id);
         }
     }
 }

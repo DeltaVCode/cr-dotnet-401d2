@@ -15,6 +15,8 @@ namespace Web.Services
         Task CreateAsync(Technology technology);
 
         Task<Technology> DeleteAsync(int id);
+
+        Task<bool> UpdateAsync(Technology technology);
     }
 
     public class DatabaseTechnologyRepository : ITechnologyRepository
@@ -56,6 +58,34 @@ namespace Web.Services
             await _context.SaveChangesAsync();
 
             return technology;
+        }
+
+        public async Task<bool> UpdateAsync(Technology technology)
+        {
+            _context.Entry(technology).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await TechnologyExistsAsync(technology.Id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<bool> TechnologyExistsAsync(int id)
+        {
+            return await _context.Technologies.AnyAsync(e => e.Id == id);
         }
     }
 }
