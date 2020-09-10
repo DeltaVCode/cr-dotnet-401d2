@@ -81,8 +81,7 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Technology>> PostTechnology(Technology technology)
         {
-            _context.Technologies.Add(technology);
-            await _context.SaveChangesAsync();
+            await repository.CreateAsync(technology);
 
             return CreatedAtAction("GetTechnology", new { id = technology.Id }, technology);
         }

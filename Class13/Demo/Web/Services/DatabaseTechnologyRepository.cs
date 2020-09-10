@@ -11,6 +11,8 @@ namespace Web.Services
         Task<IEnumerable<Technology>> GetAllAsync();
 
         Task<Technology> GetOneByIdAsync(int id);
+
+        Task CreateAsync(Technology technology);
     }
 
     public class DatabaseTechnologyRepository : ITechnologyRepository
@@ -31,6 +33,12 @@ namespace Web.Services
         {
             var technology = await _context.Technologies.FindAsync(id);
             return technology;
+        }
+
+        public async Task CreateAsync(Technology technology)
+        {
+            _context.Technologies.Add(technology);
+            await _context.SaveChangesAsync();
         }
     }
 }
