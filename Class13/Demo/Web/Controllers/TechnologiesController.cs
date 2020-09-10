@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -14,10 +13,12 @@ namespace Web.Controllers
     [ApiController]
     public class TechnologiesController : ControllerBase
     {
+        private readonly ITechnologyRepository repository;
         private readonly SchoolDbContext _context;
 
-        public TechnologiesController(SchoolDbContext context)
+        public TechnologiesController(ITechnologyRepository repository, SchoolDbContext context)
         {
+            this.repository = repository;
             _context = context;
         }
 
