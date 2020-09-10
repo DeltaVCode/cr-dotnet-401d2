@@ -36,7 +36,8 @@ namespace Web
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddTransient<IStudentRepository, MemoryStudentRepository>();
+            // services.AddTransient<IStudentRepository, MemoryStudentRepository>();
+            services.AddTransient<IStudentRepository, DatabaseStudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
