@@ -17,6 +17,8 @@ namespace Web.Services
         Task<Course> DeleteAsync(long id);
 
         Task<bool> UpdateAsync(Course course);
+
+        Task AddStudentAsync(long courseId, long studentId);
     }
 
     public class DatabaseCourseRepository : ICourseRepository
@@ -93,6 +95,18 @@ namespace Web.Services
         private async Task<bool> CourseExistsAsync(long id)
         {
             return await _context.Courses.AnyAsync(e => e.Id == id);
+        }
+
+        public async Task AddStudentAsync(long courseId, long studentId)
+        {
+            var enrollment = new Enrollment
+            {
+                CourseId = courseId,
+                StudentId = studentId,
+            };
+
+            _context.Enrollments.Add(enrollment);
+            await _context.SaveChangesAsync();
         }
     }
 }

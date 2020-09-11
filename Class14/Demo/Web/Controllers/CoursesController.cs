@@ -83,5 +83,13 @@ namespace Web.Controllers
 
             return course;
         }
+
+        // POST: api/Courses/5/Students/17
+        [HttpPost("{courseId}/Students/{studentId}")]
+        public async Task<ActionResult> AddStudent(long courseId, long studentId)
+        {
+            await repository.AddStudentAsync(courseId, studentId);
+            return CreatedAtAction(nameof(AddStudent), new { courseId, studentId }, null);
+        }
     }
 }
