@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Models
@@ -13,5 +14,8 @@ namespace Web.Models
 
         [Column(TypeName = "money")] // or decimal(18,6)
         public decimal Price { get; set; }
+
+        // Reverse Navigation Property
+        public List<Enrollment> Enrollments { get; set; }
     }
 }

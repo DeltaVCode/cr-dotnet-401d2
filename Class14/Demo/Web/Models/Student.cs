@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
@@ -14,5 +15,8 @@ namespace Web.Models
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        // Reverse Navigation Property
+        public List<Enrollment> Enrollments { get; set; }
     }
 }

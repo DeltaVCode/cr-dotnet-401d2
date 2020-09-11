@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
 
@@ -28,12 +29,18 @@ namespace Web.Services
 
         public IEnumerable<Student> GetAll()
         {
-            return _context.Students.ToList();
+            return _context.Students
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .ToList();
         }
 
         public Student GetOneById(long id)
         {
-            throw new NotImplementedException();
+            return _context.Students
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public void UpdateOneById(long id, Student student)
