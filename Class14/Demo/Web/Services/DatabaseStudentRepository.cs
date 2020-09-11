@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
@@ -14,6 +15,19 @@ namespace Web.Services
         public DatabaseStudentRepository(SchoolDbContext context)
         {
             _context = context;
+        }
+
+        public async Task AddGradeToTranscript(long studentId, CreateGrade createGrade)
+        {
+            var transcript = new Transcript
+            {
+                StudentId = studentId,
+                CourseId = createGrade.CourseId.Value,
+                Grade = createGrade.Grade.Value,
+            };
+
+            _context.Transcripts.Add(transcript);
+            await _context.SaveChangesAsync();
         }
 
         public void Create(Student student)

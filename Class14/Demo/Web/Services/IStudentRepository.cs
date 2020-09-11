@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Web.Models;
 
 namespace Web.Services
@@ -14,5 +15,6 @@ namespace Web.Services
         void UpdateOneById(long id, Student student);
 
         void DeleteOneById(long id);
+        Task AddGradeToTranscript(long studentId, CreateGrade createGrade);
     }
 }

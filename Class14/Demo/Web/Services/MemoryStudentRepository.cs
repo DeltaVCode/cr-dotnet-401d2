@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Web.Models;
 
 namespace Web.Services
@@ -40,6 +41,11 @@ namespace Web.Services
         {
             student.Id = id;
             students[id] = student;
+        }
+
+        public Task AddGradeToTranscript(long studentId, CreateGrade createGrade)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

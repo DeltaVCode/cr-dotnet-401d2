@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using Web.Services;
@@ -51,6 +52,14 @@ namespace Web.Controllers
         public void Delete(long id)
         {
             studentRepository.DeleteOneById(id);
+        }
+
+        // POST api/Students/5/Grades
+        [HttpPost("{studentId}/Grades")]
+        public async Task<ActionResult<Transcript>> AddGradeToTranscript(long studentId, [FromBody] CreateGrade createGrade)
+        {
+            await studentRepository.AddGradeToTranscript(studentId, createGrade);
+            return Ok();
         }
     }
 }
