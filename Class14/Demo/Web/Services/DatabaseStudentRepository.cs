@@ -46,6 +46,8 @@ namespace Web.Services
             return _context.Students
                 .Include(s => s.Enrollments)
                 .ThenInclude(e => e.Course)
+                .Include(s => s.Transcripts)
+                .ThenInclude(t => t.Course)
                 .ToList();
         }
 
@@ -54,6 +56,8 @@ namespace Web.Services
             return _context.Students
                 .Include(s => s.Enrollments)
                 .ThenInclude(e => e.Course)
+                .Include(s => s.Transcripts)
+                .ThenInclude(t => t.Course)
                 .FirstOrDefault(s => s.Id == id);
         }
 

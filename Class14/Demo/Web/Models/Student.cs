@@ -18,5 +18,7 @@ namespace Web.Models
 
         // Reverse Navigation Property
         public List<Enrollment> Enrollments { get; set; }
+
+        public List<Transcript> Transcripts { get; set; }
     }
 }
