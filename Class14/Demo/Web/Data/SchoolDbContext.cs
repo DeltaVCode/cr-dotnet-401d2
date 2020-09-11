@@ -15,6 +15,13 @@ namespace Web.Data
             // This does nothing, so we can delete/comment it out
             // base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Enrollment>()
+                .HasKey(enrollment => new // anonymous type, similar to JS { }
+                {
+                    enrollment.CourseId,
+                    enrollment.StudentId,
+                });
+
             modelBuilder.Entity<Technology>()
                 .HasData(
                     new Technology { Id = 1, Name = ".NET Core" },
@@ -23,6 +30,7 @@ namespace Web.Data
         }
 
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         // There should be a Students table with Student records in it
         public DbSet<Student> Students { get; set; }
