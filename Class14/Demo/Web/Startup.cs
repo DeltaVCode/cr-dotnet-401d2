@@ -36,6 +36,8 @@ namespace Web
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddTransient<ICourseRepository, DatabaseCourseRepository>();
+
             // services.AddTransient<IStudentRepository, MemoryStudentRepository>();
             services.AddTransient<IStudentRepository, DatabaseStudentRepository>();
 
