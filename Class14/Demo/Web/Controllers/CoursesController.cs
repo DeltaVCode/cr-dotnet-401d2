@@ -91,5 +91,13 @@ namespace Web.Controllers
             await repository.AddStudentAsync(courseId, studentId);
             return CreatedAtAction(nameof(AddStudent), new { courseId, studentId }, null);
         }
+
+        // DELETE: api/Courses/5/Students/17
+        [HttpDelete("{courseId}/Students/{studentId}")]
+        public async Task<ActionResult> DropStudent(long courseId, long studentId)
+        {
+            await repository.DropStudentAsync(courseId, studentId);
+            return Ok();
+        }
     }
 }
