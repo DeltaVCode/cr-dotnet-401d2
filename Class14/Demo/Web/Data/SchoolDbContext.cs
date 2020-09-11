@@ -22,6 +22,13 @@ namespace Web.Data
                     enrollment.StudentId,
                 });
 
+            modelBuilder.Entity<Transcript>()
+                .HasKey(transcript => new
+                {
+                    transcript.StudentId,
+                    transcript.CourseId,
+                });
+
             modelBuilder.Entity<Technology>()
                 .HasData(
                     new Technology { Id = 1, Name = ".NET Core" },
@@ -31,6 +38,7 @@ namespace Web.Data
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Transcript> Transcripts { get; set; }
 
         // There should be a Students table with Student records in it
         public DbSet<Student> Students { get; set; }
