@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Services;
 
 namespace Web.Controllers
 {
@@ -14,10 +15,12 @@ namespace Web.Controllers
     public class TranscriptsController : ControllerBase
     {
         private readonly SchoolDbContext _context;
+        private readonly IStudentRepository studentRepository;
 
-        public TranscriptsController(SchoolDbContext context)
+        public TranscriptsController(SchoolDbContext context, IStudentRepository studentRepository)
         {
             _context = context;
+            this.studentRepository = studentRepository;
         }
 
         // GET: api/Students/{studentId}/Grades
@@ -56,26 +59,10 @@ namespace Web.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Transcript>> PostTranscript(long studentId, Transcript transcript)
+        public async Task<ActionResult<Transcript>> PostTranscript(long studentId, [FromBody] CreateGrade createGrade)
         {
-            _context.Transcripts.Add(transcript);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (TranscriptExists(transcript.StudentId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetTranscript", new { id = transcript.StudentId }, transcript);
+            await studentRepository.AddGradeToTranscript(studentId, createGrade);
+            return Ok();
         }
 
         // DELETE: api/Transcripts/5
