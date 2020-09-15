@@ -22,7 +22,7 @@ namespace Web.Controllers
 
         // GET: api/<StudentsController>
         [HttpGet]
-        public IEnumerable<Student> Get()
+        public IEnumerable<StudentDto> Get()
         {
             return studentRepository.GetAll();
         }

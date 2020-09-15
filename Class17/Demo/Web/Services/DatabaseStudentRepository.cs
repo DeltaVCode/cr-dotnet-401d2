@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
 using Web.Models.Api;
@@ -42,13 +41,27 @@ namespace Web.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<StudentDto> GetAll()
         {
             return _context.Students
-                .Include(s => s.Enrollments)
-                .ThenInclude(e => e.Course)
-                .Include(s => s.Transcripts)
-                .ThenInclude(t => t.Course)
+                .Select(student => new StudentDto
+                {
+                    Id = student.Id,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    SortName = student.LastName + ", " + student.FirstName,
+                    DateOfBirth = student.DateOfBirth,
+
+                    Grades = student.Transcripts
+                        .Select(t => new StudentGradeDto
+                        {
+                            CourseId = t.CourseId,
+                            CourseCode = t.Course.CourseCode,
+                            // Technology = e.Course.Technology.Name,
+                            Grade = t.Grade.ToString(),
+                        })
+                        .ToList(),
+                })
                 .ToList();
         }
 

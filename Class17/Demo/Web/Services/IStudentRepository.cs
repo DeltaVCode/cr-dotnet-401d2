@@ -7,7 +7,7 @@ namespace Web.Services
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> GetAll();
+        IEnumerable<StudentDto> GetAll();
 
         StudentDto GetOneById(long id);
 

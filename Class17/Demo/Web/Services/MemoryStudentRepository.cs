@@ -28,9 +28,9 @@ namespace Web.Services
             students.Remove(id);
         }
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<StudentDto> GetAll()
         {
-            return students.Values.OrderBy(s => s.FirstName);
+            throw new System.NotImplementedException();
         }
 
         public StudentDto GetOneById(long id)
