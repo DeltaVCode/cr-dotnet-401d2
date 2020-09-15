@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Web.Data;
 using Web.Services;
 
@@ -46,6 +47,11 @@ namespace Web
             services.AddTransient<IStudentRepository, DatabaseStudentRepository>();
 
             services.AddTransient<ITechnologyRepository, DatabaseTechnologyRepository>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "DV Enrollment", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +61,17 @@ namespace Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "DV Enrollments!");
+                options.RoutePrefix = "";
+            });
 
             app.UseRouting();
 
