@@ -62,6 +62,16 @@ namespace Web.Services
                     LastName = student.LastName,
                     SortName = student.LastName + ", " + student.FirstName,
                     DateOfBirth = student.DateOfBirth,
+
+                    Grades = student.Transcripts
+                        .Select(t => new StudentGradeDto
+                        {
+                            CourseId = t.CourseId,
+                            CourseCode = t.Course.CourseCode,
+                            // Technology = e.Course.Technology.Name,
+                            Grade = t.Grade.ToString(),
+                        })
+                        .ToList(),
                 })
                 .FirstOrDefault(s => s.Id == id);
         }
