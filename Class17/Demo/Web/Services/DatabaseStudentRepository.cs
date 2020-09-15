@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
+using Web.Models.Api;
 
 namespace Web.Services
 {
@@ -51,13 +52,17 @@ namespace Web.Services
                 .ToList();
         }
 
-        public Student GetOneById(long id)
+        public StudentDto GetOneById(long id)
         {
             return _context.Students
-                .Include(s => s.Enrollments)
-                .ThenInclude(e => e.Course)
-                .Include(s => s.Transcripts)
-                .ThenInclude(t => t.Course)
+                .Select(student => new StudentDto
+                {
+                    Id = student.Id,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    SortName = student.LastName + ", " + student.FirstName,
+                    DateOfBirth = student.DateOfBirth,
+                })
                 .FirstOrDefault(s => s.Id == id);
         }
 

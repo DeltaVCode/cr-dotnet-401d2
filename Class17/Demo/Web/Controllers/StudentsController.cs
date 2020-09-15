@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
+using Web.Models.Api;
 using Web.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,7 +29,7 @@ namespace Web.Controllers
 
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-        public Student Get(long id)
+        public StudentDto Get(long id)
         {
             return studentRepository.GetOneById(id);
         }

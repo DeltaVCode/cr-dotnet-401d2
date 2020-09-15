@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Models;
+using Web.Models.Api;
 
 namespace Web.Services
 {
@@ -32,9 +33,9 @@ namespace Web.Services
             return students.Values.OrderBy(s => s.FirstName);
         }
 
-        public Student GetOneById(long id)
+        public StudentDto GetOneById(long id)
         {
-            return students.TryGetValue(id, out Student student) ? student : null;
+            throw new System.NotImplementedException();
         }
 
         public void UpdateOneById(long id, Student student)
