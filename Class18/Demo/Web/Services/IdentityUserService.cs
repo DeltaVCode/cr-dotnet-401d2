@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web.Models;
 using Web.Models.Api;
 
@@ -7,7 +8,7 @@ namespace Web.Services
 {
     public interface IUserService
     {
-        Task<UserDto> Register(RegisterData data);
+        Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState);
     }
 
     public class IdentityUserService : IUserService
@@ -19,7 +20,7 @@ namespace Web.Services
             this.userManager = userManager;
         }
 
-        public async Task<UserDto> Register(RegisterData data)
+        public async Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -36,6 +37,16 @@ namespace Web.Services
                     Id = user.Id,
                     Username = user.UserName,
                 };
+            }
+
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                    error.Code.Contains("Password") ? nameof(data.Password) :
+                    error.Code.Contains("Email") ? nameof(data.Email) :
+                    error.Code.Contains("UserName") ? nameof(data.Username) :
+                    "";
+                modelState.AddModelError(errorKey, error.Description);
             }
 
             return null;
