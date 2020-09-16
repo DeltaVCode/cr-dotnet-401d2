@@ -7,7 +7,7 @@ namespace Web.Services
 {
     public interface IUserService
     {
-        Task<ApplicationUser> Register(RegisterData data);
+        Task<UserDto> Register(RegisterData data);
     }
 
     public class IdentityUserService : IUserService
@@ -19,7 +19,7 @@ namespace Web.Services
             this.userManager = userManager;
         }
 
-        public async Task<ApplicationUser> Register(RegisterData data)
+        public async Task<UserDto> Register(RegisterData data)
         {
             var user = new ApplicationUser
             {
@@ -31,7 +31,11 @@ namespace Web.Services
             var result = await userManager.CreateAsync(user, data.Password);
             if (result.Succeeded)
             {
-                return user;
+                return new UserDto
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                };
             }
 
             return null;

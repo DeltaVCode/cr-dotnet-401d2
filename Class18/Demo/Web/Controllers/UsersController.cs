@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models;
 using Web.Models.Api;
 using Web.Services;
 
@@ -18,9 +17,9 @@ namespace Web.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<ApplicationUser>> Register(RegisterData data)
+        public async Task<ActionResult<UserDto>> Register(RegisterData data)
         {
-            ApplicationUser user = await userService.Register(data);
+            UserDto user = await userService.Register(data);
             return user;
         }
     }
