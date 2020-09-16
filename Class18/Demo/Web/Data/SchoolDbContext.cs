@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
 namespace Web.Data
 {
-    public class SchoolDbContext : IdentityDbContext<ApplicationUser, IdentityRole<long>, long>
+    public class SchoolDbContext : IdentityDbContext<ApplicationUser>
     {
         public SchoolDbContext(DbContextOptions options)
             : base(options)
