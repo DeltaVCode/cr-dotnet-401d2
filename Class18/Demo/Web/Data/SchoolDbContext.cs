@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
 namespace Web.Data
 {
-    public class SchoolDbContext : DbContext
+    public class SchoolDbContext : IdentityDbContext<ApplicationUser>
     {
         public SchoolDbContext(DbContextOptions options)
             : base(options)
@@ -12,8 +13,8 @@ namespace Web.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // This does nothing, so we can delete/comment it out
-            // base.OnModelCreating(modelBuilder);
+            // We have to have this because IdentityDbContext uses it
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Enrollment>()
                 .HasKey(enrollment => new // anonymous type, similar to JS { }
