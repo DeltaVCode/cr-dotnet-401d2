@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Web.Models;
 using Web.Models.Api;
 
@@ -11,9 +12,29 @@ namespace Web.Services
 
     public class IdentityUserService : IUserService
     {
-        public Task<ApplicationUser> Register(RegisterData data)
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public IdentityUserService(UserManager<ApplicationUser> userManager)
         {
-            throw new System.NotImplementedException();
+            this.userManager = userManager;
+        }
+
+        public async Task<ApplicationUser> Register(RegisterData data)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = data.Username,
+                Email = data.Email,
+                PhoneNumber = data.PhoneNumber,
+            };
+
+            var result = await userManager.CreateAsync(user, data.Password);
+            if (result.Succeeded)
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }
