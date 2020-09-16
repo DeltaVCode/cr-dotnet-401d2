@@ -2,7 +2,7 @@
 
 namespace Web.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<long>
     {
     }
 }
