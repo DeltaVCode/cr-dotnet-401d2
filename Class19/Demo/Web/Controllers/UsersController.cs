@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.Api;
 using Web.Services;
@@ -39,6 +40,13 @@ namespace Web.Controllers
             }
 
             return user;
+        }
+
+        [Authorize]
+        [HttpGet("Self")]
+        public async Task<ActionResult<UserDto>> Self()
+        {
+            return await userService.GetUser(this.User);
         }
     }
 }

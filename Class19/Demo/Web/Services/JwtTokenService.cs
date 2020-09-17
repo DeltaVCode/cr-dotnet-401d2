@@ -20,7 +20,7 @@ namespace Web.Services
             this.signInManager = signInManager;
         }
 
-        public async Task<string> GetToken(ApplicationUser user, TimeSpan? expiresIn)
+        public async Task<string> GetToken(ApplicationUser user, TimeSpan expiresIn)
         {
             var principal = await signInManager.CreateUserPrincipalAsync(user);
             if (principal == null) return null;
@@ -46,6 +46,7 @@ namespace Web.Services
                 // Simplifying testing
                 ValidateIssuer = false,
                 ValidateAudience = false,
+                ValidateLifetime = true,
             };
         }
 

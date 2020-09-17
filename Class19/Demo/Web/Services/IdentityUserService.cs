@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web.Models;
@@ -11,6 +13,8 @@ namespace Web.Services
         Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState);
 
         Task<UserDto> Authenticate(string username, string password);
+
+        Task<UserDto> GetUser(ClaimsPrincipal user);
     }
 
     public class IdentityUserService : IUserService
@@ -34,11 +38,21 @@ namespace Web.Services
                 {
                     Id = user.Id,
                     Username = user.UserName,
-                    Token = await tokenService.GetToken(user, null),
+                    Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
                 };
             }
 
             return null;
+        }
+
+        public async Task<UserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+            };
         }
 
         public async Task<UserDto> Register(RegisterData data, ModelStateDictionary modelState)
@@ -57,7 +71,7 @@ namespace Web.Services
                 {
                     Id = user.Id,
                     Username = user.UserName,
-                    Token = await tokenService.GetToken(user, null),
+                    Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
                 };
             }
 
