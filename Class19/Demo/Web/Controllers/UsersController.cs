@@ -6,6 +6,7 @@ using Web.Services;
 
 namespace Web.Controllers
 {
+    // [Authorize] // Replace this with a controller filter
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -17,6 +18,7 @@ namespace Web.Controllers
             this.userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register(RegisterData data)
         {
@@ -29,6 +31,7 @@ namespace Web.Controllers
             return user;
         }
 
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginData data)
         {
@@ -42,7 +45,6 @@ namespace Web.Controllers
             return user;
         }
 
-        [Authorize]
         [HttpGet("Self")]
         public async Task<ActionResult<UserDto>> Self()
         {
