@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using Web.Services;
@@ -42,6 +43,7 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutCourse(int id, Course course)
         {
             if (id != course.Id)
@@ -63,6 +65,7 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
             await repository.CreateAsync(course);
@@ -72,6 +75,7 @@ namespace Web.Controllers
 
         // DELETE: api/Courses/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Course>> DeleteCourse(long id)
         {
             var course = await repository.DeleteAsync(id);
