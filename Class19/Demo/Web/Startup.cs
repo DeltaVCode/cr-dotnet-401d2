@@ -51,6 +51,7 @@ namespace Web
                 .AddEntityFrameworkStores<SchoolDbContext>();
 
             services.AddTransient<IUserService, IdentityUserService>();
+            services.AddScoped<JwtTokenService>(); // Note: note Interface, just the service
 
             services.AddTransient<ICourseRepository, DatabaseCourseRepository>();
 
