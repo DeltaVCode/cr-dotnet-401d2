@@ -76,8 +76,7 @@ namespace Web.Services
                 }
                 else
                 {
-                    // Doesn't work because student isn't a role
-                    // await userManager.AddToRoleAsync(user, "student");
+                    await userManager.AddToRoleAsync(user, "student");
                 }
 
                 return new UserDto

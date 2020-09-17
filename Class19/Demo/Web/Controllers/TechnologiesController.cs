@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using Web.Services;
@@ -42,6 +43,7 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
+        [Authorize(Policy = "update")]
         public async Task<IActionResult> PutTechnology(int id, Technology technology)
         {
             if (id != technology.Id)
@@ -63,6 +65,7 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        [Authorize(Policy = "create")]
         public async Task<ActionResult<Technology>> PostTechnology(Technology technology)
         {
             await repository.CreateAsync(technology);
@@ -72,6 +75,7 @@ namespace Web.Controllers
 
         // DELETE: api/Technologies/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public async Task<ActionResult<Technology>> DeleteTechnology(int id)
         {
             var technology = await repository.DeleteAsync(id);

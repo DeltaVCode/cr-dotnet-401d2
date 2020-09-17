@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using Web.Models.Api;
@@ -49,6 +50,7 @@ namespace Web.Controllers
 
         // DELETE api/<StudentsController>/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "delete")]
         public void Delete(long id)
         {
             studentRepository.DeleteOneById(id);

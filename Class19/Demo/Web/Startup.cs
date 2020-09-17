@@ -78,6 +78,9 @@ namespace Web
 
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
             });
 
             services.AddTransient<ICourseRepository, DatabaseCourseRepository>();
