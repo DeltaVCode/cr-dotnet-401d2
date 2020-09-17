@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
@@ -35,6 +37,9 @@ namespace Web.Data
                     new Technology { Id = 1, Name = ".NET Core" },
                     new Technology { Id = 2, Name = "Node.js" }
                 );
+
+            SeedRole(modelBuilder, "Administrator");
+            SeedRole(modelBuilder, "Editor");
         }
 
         public DbSet<Course> Courses { get; set; }
@@ -45,5 +50,18 @@ namespace Web.Data
         public DbSet<Student> Students { get; set; }
 
         public DbSet<Technology> Technologies { get; set; }
+
+        private void SeedRole(ModelBuilder modelBuilder, string roleName)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString(),
+            };
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(role);
+        }
     }
 }
