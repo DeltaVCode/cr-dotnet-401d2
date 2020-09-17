@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -53,6 +54,22 @@ namespace Web
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddScoped<JwtTokenService>(); // Note: note Interface, just the service
 
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = JwtTokenService.GetValidationParameters(Configuration);
+                });
+
+            services.AddAuthorization(options =>
+            {
+            });
+
             services.AddTransient<ICourseRepository, DatabaseCourseRepository>();
 
             // services.AddTransient<IStudentRepository, MemoryStudentRepository>();
@@ -86,6 +103,9 @@ namespace Web
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
