@@ -34,6 +34,7 @@ namespace Web.Services
                 {
                     Id = user.Id,
                     Username = user.UserName,
+                    Token = await tokenService.GetToken(user, null),
                 };
             }
 
@@ -56,6 +57,7 @@ namespace Web.Services
                 {
                     Id = user.Id,
                     Username = user.UserName,
+                    Token = await tokenService.GetToken(user, null),
                 };
             }
 

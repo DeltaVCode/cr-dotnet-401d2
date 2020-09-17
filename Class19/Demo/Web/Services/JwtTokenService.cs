@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +18,22 @@ namespace Web.Services
         {
             this.configuration = configuration;
             this.signInManager = signInManager;
+        }
+
+        public async Task<string> GetToken(ApplicationUser user, TimeSpan? expiresIn)
+        {
+            var principal = await signInManager.CreateUserPrincipalAsync(user);
+            if (principal == null) return null;
+
+            var signingKey = GetSecurityKey(configuration);
+
+            var token = new JwtSecurityToken(
+                expires: DateTime.UtcNow + expiresIn,
+                signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+                claims: principal.Claims
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public static TokenValidationParameters GetValidationParameters(IConfiguration configuration)
