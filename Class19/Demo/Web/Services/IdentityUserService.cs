@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -39,6 +40,7 @@ namespace Web.Services
                     Id = user.Id,
                     Username = user.UserName,
                     Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+                    Roles = await userManager.GetRolesAsync(user),
                 };
             }
 
@@ -52,6 +54,7 @@ namespace Web.Services
             {
                 Id = user.Id,
                 Username = user.UserName,
+                Roles = await userManager.GetRolesAsync(user),
             };
         }
 
@@ -67,11 +70,22 @@ namespace Web.Services
             var result = await userManager.CreateAsync(user, data.Password);
             if (result.Succeeded)
             {
+                if (data.Roles?.Any() == true)
+                {
+                    await userManager.AddToRolesAsync(user, data.Roles);
+                }
+                else
+                {
+                    // Doesn't work because student isn't a role
+                    // await userManager.AddToRoleAsync(user, "student");
+                }
+
                 return new UserDto
                 {
                     Id = user.Id,
                     Username = user.UserName,
                     Token = await tokenService.GetToken(user, TimeSpan.FromMinutes(5)),
+                    Roles = await userManager.GetRolesAsync(user),
                 };
             }
 
