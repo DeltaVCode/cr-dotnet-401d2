@@ -6,7 +6,7 @@ namespace WebApplication1.Services
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> GetAll();
+        IEnumerable<Student> GetAll(string sortBy);
 
         Student GetOne(int id);
     }
@@ -30,11 +30,27 @@ namespace WebApplication1.Services
                 LastName = "White",
                 DateOfBirth = new System.DateTime(1960, 1, 1),
             },
+            new Student
+            {
+                Id = nextId++,
+                FirstName = "Alfonso",
+                LastName = "Zoop",
+            },
         };
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<Student> GetAll(string sortBy)
         {
-            return students;
+            switch (sortBy)
+            {
+                case "firstName":
+                    return students.OrderBy(s => s.FirstName);
+
+                case "lastName":
+                    return students.OrderBy(s => s.LastName);
+
+                default:
+                    return students;
+            }
         }
 
         public Student GetOne(int id)

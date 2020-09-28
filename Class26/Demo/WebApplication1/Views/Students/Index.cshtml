@@ -1,6 +1,13 @@
-﻿@model List<Student>
+﻿@model IEnumerable<Student>
 
 <h1>Student List</h1>
+
+<h3>Sort By</h3>
+<form>
+    <label><input type="radio" name="sortBy" value="firstName" /> First Name</label>
+    <label><input type="radio" name="sortBy" value="lastName" /> Last Name</label>
+    <button>Sort!</button>
+</form>
 
 @foreach (var student in Model)
 {

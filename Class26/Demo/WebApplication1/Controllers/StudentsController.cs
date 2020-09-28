@@ -14,13 +14,13 @@ namespace WebApplication1.Controllers
         }
 
         // GET: StudentsController
-        public ActionResult Index()
+        public ActionResult Index(string sortBy)
         {
-            var students = studentRepository.GetAll();
+            var students = studentRepository.GetAll(sortBy);
             return View(students);
         }
 
-        // GET: StudentsController/Details/5
+        // GET: StudentsController/Details/{id}
         public ActionResult Details(int id)
         {
             var student = studentRepository.GetOne(id);
