@@ -1,0 +1,12 @@
+﻿@model List<Student>
+
+<h1>Student List</h1>
+
+@foreach (var student in Model)
+{
+    <h2>@student.FirstName @student.LastName</h2>
+    @if (student.DateOfBirth != null)
+    {
+        <p>DOB: @student.DateOfBirth.Value.ToString("MMM d, yyyy")</p>
+    }
+}

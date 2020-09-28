@@ -1,0 +1,7 @@
+﻿@model Student
+
+<h1>@Model.FirstName @Model.LastName</h1>
+@if (Model.DateOfBirth != null)
+{
+    <p>DOB: @Model.DateOfBirth.Value.ToString("MMM d, yyyy")</p>
+}
