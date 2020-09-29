@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -19,8 +15,11 @@ namespace WebApplication1.Pages
 
         public void OnGet()
         {
+            Username = User.FindFirst(ClaimTypes.Name)?.Value;
             MethodAndPath = $"{Request.Method} {Request.Path}";
         }
+
+        public string Username { get; private set; }
 
         public string MethodAndPath { get; set; }
     }

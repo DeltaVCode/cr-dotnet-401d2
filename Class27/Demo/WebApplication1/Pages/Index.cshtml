@@ -5,7 +5,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">
+        Welcome
+        @if (Model.Username != null)
+        {
+            <text>, @Model.Username</text>
+        }
+    </h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h2>@Model.MethodAndPath</h2>
 </div>
