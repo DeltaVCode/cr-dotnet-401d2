@@ -19,7 +19,9 @@ namespace WebApplication1.Pages
 
         public void OnGet()
         {
-
+            MethodAndPath = $"{Request.Method} {Request.Path}";
         }
+
+        public string MethodAndPath { get; set; }
     }
 }
