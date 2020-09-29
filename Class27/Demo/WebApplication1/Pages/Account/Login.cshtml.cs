@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,7 +19,7 @@ namespace WebApplication1.Pages.Account
         public async Task OnGetAsync()
         {
             // Clear our cookie so we can actually log in
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await signInManager.SignOutAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
