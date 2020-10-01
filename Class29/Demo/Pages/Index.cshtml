@@ -9,6 +9,7 @@
     @if (Model.UploadedFileName != null)
     {
         <h2>Last Upload: @Model.UploadedFileName</h2>
+        <img src="@Model.UploadedFileLink" />
     }
     <form method="post" enctype="multipart/form-data">
         <p>
