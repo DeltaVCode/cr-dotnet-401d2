@@ -6,6 +6,9 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <header>
+        @await Component.InvokeAsync("TodoCount")
+    </header>
     <div>
         @RenderBody()
     </div>
