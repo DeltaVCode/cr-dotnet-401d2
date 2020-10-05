@@ -35,6 +35,8 @@ namespace TodoApi
                 options.Filters.Add(new AuthorizeFilter());
             });
 
+            services.AddRazorPages();
+
             services.AddDbContext<TodoDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -108,7 +110,7 @@ namespace TodoApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/api/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "";
+                c.RoutePrefix = "api-docs";
             });
 
             app.UseCors(policy =>
@@ -125,6 +127,7 @@ namespace TodoApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
         }

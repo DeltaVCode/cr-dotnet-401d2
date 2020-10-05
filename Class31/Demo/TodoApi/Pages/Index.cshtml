@@ -1,0 +1,18 @@
+﻿@page
+@model TodoApi.Pages.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@foreach (var todo in Model.Todos)
+{
+    <li>
+        @todo.Title
+        @if (todo.Completed)
+        {
+            <text>(Completed)</text>
+        }
+    </li>
+}
