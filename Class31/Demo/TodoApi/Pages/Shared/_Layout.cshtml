@@ -7,7 +7,8 @@
 </head>
 <body>
     <header>
-        @await Component.InvokeAsync("TodoCount")
+        @await Component.InvokeAsync("TodoCount", new { incompleteMessage = "Hurry up!" })
+        <vc:todo-count incomplete-message="Stop slacking" />
     </header>
     <div>
         @RenderBody()

@@ -15,7 +15,7 @@ namespace TodoApi.Components
             this.db = db;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string incompleteMessage)
         {
             /*
              * SELECT IncompleteCount = SUM(CASE WHEN t.Completed = 0 THEN 1 ELSE 0 END)
@@ -27,6 +27,7 @@ namespace TodoApi.Components
                 .Select(g => new TodoCountViewModel
                 {
                     IncompleteCount = g.Sum(t => t.Completed == false ? 1 : 0),
+                    IncompleteMessage = incompleteMessage ?? "Incomplete count:",
                     TotalCount = g.Count(),
                 })
                 .FirstAsync();
@@ -39,5 +40,6 @@ namespace TodoApi.Components
     {
         public int IncompleteCount { get; set; }
         public int TotalCount { get; set; }
+        public string IncompleteMessage { get; set; }
     }
 }
