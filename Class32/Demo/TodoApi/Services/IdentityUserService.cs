@@ -12,11 +12,16 @@ namespace TodoApi.Services
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtTokenService tokenService;
+        private readonly IEmailService emailService;
 
-        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtTokenService tokenService)
+        public IdentityUserService(
+            UserManager<ApplicationUser> userManager,
+            JwtTokenService tokenService,
+            IEmailService emailService)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
+            this.emailService = emailService;
         }
 
         public async Task<UserWithToken> Authenticate(string username, string password)
@@ -47,6 +52,12 @@ namespace TodoApi.Services
             if (result.Succeeded)
             {
                 await userManager.AddToRolesAsync(user, data.Roles);
+
+                await emailService.SendEmail(
+                    user.Email,
+                    "Welcome to TODO!",
+                    $"<h1>Welcome, {user.UserName}!</h1>");
+
                 return await GetUserWithToken(user);
             }
 
