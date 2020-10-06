@@ -65,6 +65,8 @@ namespace TodoApi
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<JwtTokenService>();
 
+            services.AddSingleton<IEmailService, SendGridEmailService>();
+
             services
                 .AddAuthentication(options =>
                 {
