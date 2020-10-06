@@ -1,0 +1,9 @@
+﻿@model TodoApi.Components.TodoCountViewModel
+@if (Model.IncompleteCount == 0)
+{
+    <div class="alert alert-success">You're all caught up! @Model.TotalCount completed!</div>
+}
+else
+{
+    <div class="alert alert-danger">@Model.IncompleteMessage @Model.IncompleteCount / @Model.TotalCount</div>
+}

@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <header>
+        @await Component.InvokeAsync("TodoCount", new { incompleteMessage = "Hurry up!" })
+        <vc:todo-count incomplete-message="Stop slacking" />
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
