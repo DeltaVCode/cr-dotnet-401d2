@@ -28,16 +28,8 @@ The following user/developer stories detail the major functionality for this pha
 - Apply styling and layout using React Bootstrap Components
 - Match the provided mockup for the design
   - Use `react-bootstrap` components and theming
-  - Some interactivity notes:
-    - Each item in list should show the text of the item as well as the assignee
-    - When clicked, toggle the "complete" status of the item.
-    - Items should be styled differently when complete/incomplete making their status visually obvious
 
 ![TODO](todo.png)
-
-### Testing
-
-- Tests should assert all behavioral functionality
 
 ### Assignment Submission Instructions
 
