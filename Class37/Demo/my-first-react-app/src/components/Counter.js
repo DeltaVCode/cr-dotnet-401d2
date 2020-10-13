@@ -5,13 +5,13 @@ export default function Counter(props) {
 
   // useState hook!
   const [count, setCount] = useState(0);
-  const [isEven, setIsEven] = useState(count % 2 == 0);
+  const [isEven, setIsEven] = useState(count % 2 === 0);
   const [numberToAdd, setNumberToAdd] = useState(2);
 
   function addToCount(n) {
     const newCount = count + n;
     setCount(newCount);
-    setIsEven(newCount % 2 == 0);
+    setIsEven(newCount % 2 === 0);
   }
 
   function plusOne(e) {
