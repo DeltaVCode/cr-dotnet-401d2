@@ -14,11 +14,16 @@ export default function People(props) {
     setPeople([person, ...people]);
   }
 
+  function deletePersonByIndex(indexToRemove) {
+    console.log(indexToRemove);
+    setPeople(people.filter((person, idx) => idx !== indexToRemove));
+  }
+
   return (
     <>
       <h1>People!</h1>
       <PeopleForm onSave={savePerson} />
-      <PeopleList people={people} />
+      <PeopleList people={people} onDelete={deletePersonByIndex} />
     </>
   )
 }
@@ -52,12 +57,15 @@ function PeopleForm(props) {
 }
 
 function PeopleList(props) {
-  const { people } = props;
+  const { people, onDelete } = props;
 
   return (
     <ul>
       {people.map((person, idx) => (
-        <li key={idx}>{person.name}</li>
+        <li key={idx}>
+          {person.name}
+          <button onClick={() => onDelete(idx)}>Delete</button>
+        </li>
       ))}
     </ul>
   )
