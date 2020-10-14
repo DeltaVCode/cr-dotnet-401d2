@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useTheme } from '../contexts/theme';
+
+import './Counter.css';
 
 export default function Counter(props) {
   const { title } = props;
+
+  const theme = useTheme();
+  // console.log(theme);
 
   // useState hook!
   const [count, setCount] = useState(0);
@@ -35,7 +41,7 @@ export default function Counter(props) {
   }
 
   return (
-    <form>
+    <form className={theme.mode}>
       <h2>{title || 'My Counter'}</h2>
       <p>Count: {count} {isEven && 'is even'}</p>
       <button onClick={plusOne}>+1</button>
