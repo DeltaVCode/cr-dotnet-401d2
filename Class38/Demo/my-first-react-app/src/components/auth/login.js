@@ -14,11 +14,17 @@ export default function Login() {
     );
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const { username, password } = e.target.elements;
+    // Pull value out so we can access form after the await
+    const { target } = e;
 
-    login(username.value);
+    const { username, password } = target.elements;
+
+    if (!await login(username.value, password.value))
+    {
+      target.reset();
+    }
   }
 
   return (
