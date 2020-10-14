@@ -33,24 +33,24 @@ export default function People(props) {
     return;
 
     // longer way, not so idiomatic
-    let arr = []
-    for(let i = 0; i < people.length; i++) {
-      if (i === index) {
-        arr[index] = {
-          // First, copy everything from the current person
-          ...people[i],
+    // let arr = []
+    // for(let i = 0; i < people.length; i++) {
+    //   if (i === index) {
+    //     arr[index] = {
+    //       // First, copy everything from the current person
+    //       ...people[i],
 
-          // Replace/set some properties
-          copiedAt: new Date(),
-          status: !people[i].status,
-        };
-      }
-      else {
-        arr[i] = people[i]
-      }
-    }
-    console.log(arr);
-    setPeople(arr);
+    //       // Replace/set some properties
+    //       copiedAt: new Date(),
+    //       status: !people[i].status,
+    //     };
+    //   }
+    //   else {
+    //     arr[i] = people[i]
+    //   }
+    // }
+    // console.log(arr);
+    // setPeople(arr);
   }
 
   return (
