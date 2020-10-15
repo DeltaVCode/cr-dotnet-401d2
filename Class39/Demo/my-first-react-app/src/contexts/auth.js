@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useCallback, useMemo, useState } from 'react';
 import jwt from 'jsonwebtoken';
 
 const usersAPI = 'https://deltav-todo.azurewebsites.net/api/v1/Users';
@@ -13,26 +13,9 @@ export function useAuth() {
 export default useAuth;
 
 export function AuthProvider(props) {
-  const [state, setState] = useState({
-    user: null,
+  const [user, setUser] = useState(null);
 
-    // Functions!
-    login,
-    logout,
-  });
-
-  function setUser(user) {
-    user = processToken(user);
-
-    setState(prevState => ({
-      ...prevState,
-      user,
-    }));
-
-    return !!user;
-  }
-
-  async function login(username, password) {
+  const login = useCallback(async function login(username, password) {
     const result = await fetch(`${usersAPI}/Login`, {
       method: 'post',
       headers: {
@@ -44,16 +27,28 @@ export function AuthProvider(props) {
     const resultBody = await result.json();
 
     if (result.ok) {
-      return setUser(resultBody);
+      let user = processToken(resultBody.token);
+      console.log('setting user from token', user);
+      setUser(user);
+      return !!user; // return true if user is truthy
     }
 
     // TODO: add an error to show about invalid username/password
     logout();
-  }
+    return false;
+  }, []);
 
   function logout() {
     setUser(null)
   }
+
+  const state = useMemo(() => ({
+    user,
+    timestamp: new Date(),
+
+    login,
+    logout,
+  }), [user, login])
 
   return (
     <AuthContext.Provider value={state}>
@@ -62,15 +57,18 @@ export function AuthProvider(props) {
   )
 }
 
-function processToken(user) {
-  if (!user)
+function processToken(token) {
+  if (!token)
     return null;
 
   try {
-    const payload = jwt.decode(user.token);
+    const payload = jwt.decode(token);
     if (payload){
-      user.permissions = payload.permissions || [];
-      return user;
+      return {
+        id: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
+        username: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+        permissions: payload.permissions || [],
+      }
     }
 
     return null;
