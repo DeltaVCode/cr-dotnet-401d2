@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Auth from './auth';
+import useAuth from '../contexts/auth';
 
 // Should be in .env as REACT_APP_API_SERVER instead of hard coded
 const todoAPI = 'https://deltav-todo.azurewebsites.net/api/v1/Todos';
 
+const mapTaskToPerson = task => ({
+  id: task.id,
+  name: task.assignedTo,
+  attending: task.completed,
+});
+
 export default function People(props) {
+  const { user: { token } } = useAuth();
+
   const [loading, setLoading] = useState(true);
-  const [people, setPeople] = useState(null);
+  const [people, setPeople] = useState([]);
 
   useEffect(() => {
     console.log('Run me once when the component loads');
@@ -18,7 +27,7 @@ export default function People(props) {
       let response = await fetch(todoAPI);
       let tasks = await response.json();
       console.log(tasks);
-      setPeople(tasks.map(task => ({ name: task.assignedTo, attending: task.completed })));
+      setPeople(tasks.map(mapTaskToPerson));
       setLoading(false);
     }
     fetchPeople();
@@ -41,17 +50,42 @@ export default function People(props) {
 
   console.log('Component function was called')
 
-  function savePerson(person) {
+  async function savePerson(person) {
     // DO NOT USE push
 
     // setPeople(people.concat(person));
 
     // Or use ES6 spread
-    setPeople([person, ...people]);
+    // setPeople([person, ...people]);
+
+    let response = await fetch(todoAPI, {
+      method: 'post',
+      body: JSON.stringify({
+        "title": 'Attend event',
+        "difficulty": 1,
+        "assignedTo": person.name,
+        "completed": false
+      }),
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    let task = await response.json();
+    setPeople([...people, mapTaskToPerson(task)])
   }
 
-  function deletePersonByIndex(indexToRemove) {
+  async function deletePersonByIndex(indexToRemove) {
+    let personToRemove = people[indexToRemove];
+
     setPeople(people.filter((person, idx) => idx !== indexToRemove));
+
+    await fetch(`${todoAPI}/${personToRemove.id}`, {
+      method: 'delete',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
   }
 
   function togglePersonAttending(index) {
@@ -94,7 +128,9 @@ export default function People(props) {
   return (
     <>
       <h1>People!</h1>
-      <PeopleForm onSave={savePerson} />
+      <Auth permission='create'>
+        <PeopleForm onSave={savePerson} />
+      </Auth>
       <PeopleList people={people}
          onDelete={deletePersonByIndex}
          onRsvp={togglePersonAttending} />
