@@ -7,6 +7,7 @@ import { useAuth } from './contexts/auth';
 import Login from './components/auth/login'
 import Logout from './components/auth/logout'
 import Auth from './components/auth'; // index.js
+import Tasks from './components/Tasks';
 
 function App() {
   const { user, hasPermission } = useAuth();
@@ -19,6 +20,7 @@ function App() {
       </Auth>
       <Login />
       <Settings />
+      <Tasks />
       <Auth>
         <People />
       </Auth>
