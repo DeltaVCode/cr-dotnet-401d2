@@ -5,6 +5,7 @@ import People from './components/People'
 import Settings from './components/Settings'
 import { useAuth } from './contexts/auth';
 import Login from './components/auth/login'
+import Logout from './components/auth/logout'
 import Auth from './components/auth'; // index.js
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <People />
       </Auth>
       <Counter title="First Counter" />
+      <Logout />
       <Counter title="Second Counter" />
     </div>
   );

@@ -10,6 +10,7 @@ export function useAuth() {
   if (!auth) throw new Error('You are missing AuthProvider!');
   return auth;
 }
+export default useAuth;
 
 export function AuthProvider(props) {
   const [state, setState] = useState({
