@@ -6,12 +6,18 @@ import { AuthProvider } from './contexts/auth';
 import { ThemeProvider } from './contexts/theme';
 import * as serviceWorker from './serviceWorker';
 
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
+ 
+const queryCache = new QueryCache()
+ 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <ReactQueryCacheProvider queryCache={queryCache}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ReactQueryCacheProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
