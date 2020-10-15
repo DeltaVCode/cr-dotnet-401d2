@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Auth from './auth';
 
 export default function People(props) {
   const [people, setPeople] = useState([
@@ -101,8 +102,12 @@ function PeopleList(props) {
         <li key={idx}>
           {person.name}
           <p>Attending: {person.attending ? 'Yes' : 'No'}</p>
-          <input type="checkbox" checked={person.attending} onChange={() => onRsvp(idx)} />
-          <button onClick={() => onDelete(idx)}>Delete</button>
+          <Auth permission='update'>
+            <input type="checkbox" checked={person.attending} onChange={() => onRsvp(idx)} />
+          </Auth>
+          <Auth permission='delete'>
+            <button onClick={() => onDelete(idx)}>Delete</button>
+          </Auth>
         </li>
       ))}
     </ul>
