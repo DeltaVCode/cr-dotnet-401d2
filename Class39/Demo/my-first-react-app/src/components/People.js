@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Auth from './auth';
 
+// Should be in .env as REACT_APP_API_SERVER instead of hard coded
+const todoAPI = 'https://deltav-todo.azurewebsites.net/api/v1/Todos';
+
 export default function People(props) {
-  const [people, setPeople] = useState([
-    { name: 'Keith' }
-  ]);
+  const [loading, setLoading] = useState(true);
+  const [people, setPeople] = useState(null);
 
   useEffect(() => {
     console.log('Run me once when the component loads');
+
+    async function fetchPeople() {
+      // Slow down so we can see Loading...
+      await delay(2000);
+
+      let response = await fetch(todoAPI);
+      let tasks = await response.json();
+      console.log(tasks);
+      setPeople(tasks.map(task => ({ name: task.assignedTo, attending: task.completed })));
+      setLoading(false);
+    }
+    fetchPeople();
 
     // "Dispose" action
     return () => {
@@ -73,6 +87,10 @@ export default function People(props) {
     // setPeople(arr);
   }
 
+  if (loading) {
+    return <h1>People loading...</h1>
+  }
+
   return (
     <>
       <h1>People!</h1>
@@ -131,4 +149,10 @@ function PeopleList(props) {
       ))}
     </ul>
   )
+}
+
+function delay(timeout) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
 }
