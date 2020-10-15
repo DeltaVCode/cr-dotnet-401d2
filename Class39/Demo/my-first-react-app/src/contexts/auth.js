@@ -42,13 +42,18 @@ export function AuthProvider(props) {
     setUser(null)
   }
 
+  const hasPermission = useCallback(function hasPermission(permission) {
+    return user?.permissions.includes(permission);
+  }, [user]);
+
   const state = useMemo(() => ({
     user,
     timestamp: new Date(),
 
     login,
     logout,
-  }), [user, login])
+    hasPermission,
+  }), [user, login, hasPermission])
 
   return (
     <AuthContext.Provider value={state}>

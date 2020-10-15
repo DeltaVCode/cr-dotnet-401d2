@@ -9,11 +9,14 @@ import Logout from './components/auth/logout'
 import Auth from './components/auth'; // index.js
 
 function App() {
-  const { user } = useAuth();
+  const { user, hasPermission } = useAuth();
 
   return (
     <div className="App">
       <h1>{user ? `Welcome, ${user.username}` : 'Who are you?'}</h1>
+      <Auth>
+        <h2>User can delete? {hasPermission('delete') ? 'Yes' : 'No'}</h2>
+      </Auth>
       <Login />
       <Settings />
       <Auth>
