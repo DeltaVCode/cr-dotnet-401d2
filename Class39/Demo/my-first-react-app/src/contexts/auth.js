@@ -1,5 +1,7 @@
-import React, { useContext, useCallback, useMemo, useState } from 'react';
+import React, { useContext, useCallback, useMemo, useState, useEffect } from 'react';
 import jwt from 'jsonwebtoken';
+import cookie from 'react-cookies';
+const cookieName = 'auth';
 
 const usersAPI = 'https://deltav-todo.azurewebsites.net/api/v1/Users';
 
@@ -14,6 +16,13 @@ export default useAuth;
 
 export function AuthProvider(props) {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    console.log(`Checking for ${cookieName} cookie`);
+    const cookieToken = cookie.load(cookieName);
+    const cookieUser = processToken(cookieToken);
+    setUser(cookieUser);
+  }, []);
 
   const login = useCallback(async function login(username, password) {
     const result = await fetch(`${usersAPI}/Login`, {
@@ -40,6 +49,7 @@ export function AuthProvider(props) {
 
   function logout() {
     setUser(null)
+    cookie.remove(cookieName, { path: '/' });
   }
 
   const hasPermission = useCallback(function hasPermission(permission) {
@@ -69,6 +79,9 @@ function processToken(token) {
   try {
     const payload = jwt.decode(token);
     if (payload){
+      // Token looks legit, so let's save it
+      cookie.save(cookieName, token, { path: '/' });
+
       return {
         id: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
         username: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
