@@ -1,10 +1,31 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Auth from './auth';
 
 export default function People(props) {
   const [people, setPeople] = useState([
     { name: 'Keith' }
   ]);
+
+  useEffect(() => {
+    console.log('Run me once when the component loads');
+
+    // "Dispose" action
+    return () => {
+      console.log('Run me when component goes away')
+    }
+  }, []);
+
+  // Run this function only if people.length has changed
+  useEffect(() => {
+    document.title = `People: ${people.length}`;
+    console.log('changed title to ', document.title)
+  }, [people.length])
+
+  useEffect(() => {
+    console.log('Run me every render');
+  });
+
+  console.log('Component function was called')
 
   function savePerson(person) {
     // DO NOT USE push
@@ -16,12 +37,10 @@ export default function People(props) {
   }
 
   function deletePersonByIndex(indexToRemove) {
-    console.log(indexToRemove);
     setPeople(people.filter((person, idx) => idx !== indexToRemove));
   }
 
   function togglePersonAttending(index) {
-    console.log(index);
     const newPeople = people.map((person, idx) => (
       idx !== index ? person :
         {
