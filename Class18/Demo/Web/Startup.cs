@@ -86,6 +86,18 @@ namespace Web
 
             app.UseRouting();
 
+            app.UseCors(policy =>
+            {
+                // Only this is required for our use case
+                policy.AllowAnyOrigin();
+                // Not sure exactly how this works!
+                // policy.WithOrigins("127.0.0.1:5500");
+
+                // Other options to allow/expose more stuff in the browser
+                policy.AllowAnyMethod();
+                policy.AllowAnyHeader();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
